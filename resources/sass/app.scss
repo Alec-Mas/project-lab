@@ -8,7 +8,27 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+
+html {
+  background: url("/images/telstra_background.png") no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+body {
+  padding-top: 54px;
+  background-color: transparent;
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+    background-color: transparent;
+  }
+}
+
+.card {
+  height: 100%;
 }
