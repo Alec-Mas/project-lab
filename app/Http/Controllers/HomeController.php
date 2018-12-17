@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Hero;
+use App\Models\Post;
+use App\User;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +27,147 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // Retrieve the Hero
+        $hero = Hero::paginate(5);
+        // Retrieve the Latest Posts
+        $posts = Post::paginate(20);
+        return view('Dashboard\home', compact('hero', 'posts'));
+    }
+
+    public function show(Request $request)
+    {
+        $post = Post::findorFail($request->id);
+        
+        return view('portfolio\index', compact('post'));
+    }
+
+    public function retrievePost(Request $request)
+    {
+
+        if($request->ajax())
+        {
+            $posts = Post::findorFail($request->id);
+
+            return Response($posts);
+        }
+    }
+
+    public function deletePost(Request $request)
+    {
+        $post = Post::findorFail($request->id);
+        $post->delete();
+        return redirect('dashboard');
+
+    }
+
+    public function createPost(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'post_title'=>'required|max:50',
+                'post_brief' =>'required',
+                'post_content' =>'required',
+                'post_thumbnail' =>'required',
+                'post_call_to_action' =>'required',
+                ]);
+
+            Post::create([
+                'post_title' => request('post_title'),
+                'post_brief' => request('post_brief'),
+                'post_content' => request('post_content'),
+                'post_thumbnail' => request('post_thumbnail'),
+                'post_call_to_action' => request('post_call_to_action'),
+            ]);
+
+            //return Response($request);
+        }
+    }
+
+    public function updatePost(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'post_title'=>'required|max:50',
+                'post_brief' =>'required',
+                'post_content' =>'required',
+                'post_thumbnail' =>'required',
+                'post_call_to_action' =>'required',
+                ]);
+
+            $post = Post::findorFail($request->id);
+
+            $post->post_title = $request['post_title'];
+            $post->post_brief = $request['post_brief'];
+            $post->post_content = $request['post_content'];
+            $post->post_thumbnail = $request['post_thumbnail'];
+            $post->post_call_to_action = $request['post_call_to_action'];
+            $post->save();
+
+            return Response($request);
+            //echo $request;
+        }
+    }
+
+
+    public function retrieveHero(Request $request)
+    {
+        if($request->ajax())
+        {
+            $hero = Hero::findorFail($request->id);
+
+            return Response($hero);
+        }
+    }
+
+    public function deleteHero(Request $request)
+    {
+        $hero = Hero::findorFail($request->id);
+        $hero->delete();
+        return redirect('dashboard');
+
+    }
+
+    public function createHero(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'hero_title'=>'required|max:50',
+                'hero_content' =>'required',
+                'hero_call_to_action' =>'required',
+            ]);
+
+            Hero::create([
+                'hero_title' => request('hero_title'),
+                'hero_content' => request('hero_content'),
+                'hero_call_to_action' => request('hero_call_to_action'),
+            ]);
+
+            //return Response($request);
+        }
+    }
+
+    public function updateHero(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'hero_title'=>'required|max:50',
+                'hero_content' =>'required',
+                'hero_call_to_action' =>'required',
+                ]);
+
+            $hero = Hero::findorFail($request['id']);
+
+            $hero->hero_title = $request['hero_title'];
+            $hero->hero_content = $request['hero_content'];
+            $hero->hero_call_to_action = $request['hero_call_to_action'];
+            $hero->save();
+
+            return Response($request);
+            //echo $request;
+        }
     }
 }

@@ -12,6 +12,6 @@ class Hero extends Model
      * @var array
      */
     protected $fillable = [
-        '', '', '',
+        'hero_title', 'hero_content', 'hero_call_to_action',
     ];
 }

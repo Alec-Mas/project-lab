@@ -15,5 +15,23 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
+// Public Routes
 Route::get('/', 'LandingController@index')->name('home');
+Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+Route::get('/post/retrieve/{id}', 'HomeController@show')->name('show.post');
+Route::get('/contact', 'LandingController@contact')->name('contact');
+
+
+# Content Routes [MUST BE LOGGED IN]
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/grab','HomeController@retrievePost');
+    Route::get('/post/update','HomeController@updatePost');
+    Route::post('/post/create','HomeController@createPost');
+    Route::post('/post/delete/{id}','HomeController@deletePost')->name('delete.post');
+    Route::post('/hero/create','HomeController@createHero');
+    Route::get('/hero/retrieve','HomeController@retrieveHero');
+    Route::get('/hero/update','HomeController@updateHero');
+    Route::post('/hero/delete/{id}','HomeController@deleteHero')->name('delete.hero');
+});
+
 

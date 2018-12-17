@@ -6,13 +6,15 @@
             <img class="card-img-top" src="http://placehold.it/500x325" alt="">
             <div class="card-body">
             <h4 class="card-title">{{ $p->post_title }}</h4>
-            <p class="card-text">{{ $p->post_content }}</p>
+            <p class="card-text">{{ $p->post_brief }}</p>
             </div>
             <div class="card-footer">
-            <a href="#" class="btn btn-primary">{{ $p->post_call_to_action }}</a>
+            <a href="{{ route('show.post', $p->id) }}" id="{{ $p->id }}" class="btn btn-primary">{{ $p->post_call_to_action }}</a>
+            <p class="mt-2 mb-0"><i>Last updated {{ $p->updated_at->diffForHumans() }}</i></p>
             </div>
         </div>
     </div>
     @endforeach
 </div>
+
 <!-- /.row -->
