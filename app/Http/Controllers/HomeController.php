@@ -31,7 +31,7 @@ class HomeController extends Controller
         $hero = Hero::paginate(5);
         // Retrieve the Latest Posts
         $posts = Post::paginate(20);
-        return view('Dashboard\home', compact('hero', 'posts'));
+        return view('dashboard\home', compact('hero', 'posts'));
     }
 
     public function show(Request $request)
