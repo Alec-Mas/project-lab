@@ -16,9 +16,9 @@
             </li>
             @endif
 
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Projects</a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('projects') }}">Projects</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('contact') }}">Contact</a>
             </li>

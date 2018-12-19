@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Hero;
 use App\Models\Post;
+use App\Models\DocumentLink;
 use App\User;
 use Auth;
 
@@ -32,13 +33,6 @@ class HomeController extends Controller
         // Retrieve the Latest Posts
         $posts = Post::paginate(20);
         return view('dashboard.home', compact('hero', 'posts'));
-    }
-
-    public function show(Request $request)
-    {
-        $post = Post::findorFail($request->id);
-        
-        return view('portfolio.index', compact('post'));
     }
 
     public function retrievePost(Request $request)
@@ -168,6 +162,55 @@ class HomeController extends Controller
 
             return Response($request);
             //echo $request;
+        }
+    }
+
+    public function retrieveDocument(Request $request)
+    {
+
+        if($request->ajax())
+        {
+            $document = DocumentLink::findorFail($request->id);
+
+            return Response($document);
+        }
+    }
+
+    public function createDocument(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'document_title'=>'required|max:50',
+                'document_link' =>'required',
+            ]);
+
+            DocumentLink::create([
+                'document_name' => request('document_title'),
+                'document_link' => request('document_link'),
+                'post_id' => request('id'),
+            ]);
+
+            //return Response($request);
+        }
+    }
+
+    public function updateDocument(Request $request)
+    {
+        if($request->ajax())
+        {
+            $this->validate($request, [
+                'document_title'=>'required|max:50',
+                'document_link' =>'required',
+                ]);
+
+            $document = DocumentLink::findorFail($request['id']);
+
+            $document->document_name = $request['document_title'];
+            $document->document_link = $request['document_link'];
+            $document->save();
+
+            //return Response($request);
         }
     }
 }

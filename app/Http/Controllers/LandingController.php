@@ -27,4 +27,18 @@ class LandingController extends Controller
         $users = User::paginate(5);
         return view('landing.contact', compact('users'));
     }
+
+    public function projects()
+    {   
+        $projects = Post::all();
+        return view('landing.projects', compact('projects'));
+    }
+    
+    public function show(Request $request)
+    {
+        // Retrieve all the posts
+        $post = Post::findorFail($request->id);
+        
+        return view('portfolio.index', compact('post'));
+    }
 }

@@ -14,4 +14,9 @@ class Post extends Model
     protected $fillable = [
         'post_title','post_brief', 'post_content', 'post_thumbnail', 'post_call_to_action',
     ];
+
+    public function documents()
+    {
+        return $this->hasMany('App\Models\DocumentLink', 'post_id');
+    }
 }
