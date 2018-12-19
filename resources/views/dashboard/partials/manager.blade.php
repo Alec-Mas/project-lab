@@ -4,10 +4,10 @@
         <table class="table">
             <thead>
                 <tr>
-                <th scope="col">#</th>
                 <th scope="col">Post Title</th>
                 <th scope="col">Post Brief</th>
                 <th scope="col">Post Content</th>
+                <th scope="col">Attached Documents</th>
                 <th scope="col">Date Created</th>
                 <th scope="col">Date Modified</th>
                 <th scope="col">Operations</th>
@@ -16,13 +16,16 @@
             <tbody>
             @foreach($posts as $p)
                 <tr>
-                    <th scope="row">{{ $p->id }}</th>
                     <td>{{ $p->post_title }}</td>
                     <td>{{ $p->post_brief }}</td>
                     <td>{{ substr($p->post_content, 0, 50) }}...</td>
+                    <td>{{ count($p->documents) }}</td>
                     <td>{{ $p->created_at->diffForHumans() }}</td>
                     <td>{{ $p->updated_at->diffForHumans() }}</td>
                     <td>
+                        <a class="btn btn-success mb-1" href="{{ route('show.post', $p->id) }}">
+                            <i class="fa fa-eye icon-large"></i>
+                        </a>
                         <button class="btn btn-primary mb-1" data-toggle="modal" data-target="#editPost" data-id="{{ $p->id }}" data-whatever="{{ $p->id }}">
                             <i class="fa fa-wrench icon-large"></i>
                         </button>

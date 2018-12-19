@@ -23,7 +23,7 @@
                     <td>{{ $p->post_brief }}</td>
                     <td>
                         <a class="btn btn-success mb-1" href="{{ route('show.post', $p->id) }}">
-                            <i class="fa fa-link icon-large"></i>
+                            <i class="fa fa-eye icon-large"></i>
                         </a>
                     </td>
                 </tr>

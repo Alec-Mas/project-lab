@@ -4,7 +4,6 @@
         <table class="table">
             <thead>
                 <tr>
-                <th scope="col">#</th>
                 <th scope="col">Hero Title</th>
                 <th scope="col">Hero Content</th>
                 <th scope="col">Date Created</th>
@@ -15,7 +14,6 @@
             <tbody>
             @foreach($hero as $h)
                 <tr>
-                    <th scope="row">{{ $h->id }}</th>
                     <td>{{ $h->hero_title }}</td>
                     <td>{{ substr($h->hero_content, 0, 50) }}...</td>
                     <td>{{ $h->created_at->diffForHumans() }}</td>

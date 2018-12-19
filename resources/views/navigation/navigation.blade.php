@@ -10,20 +10,44 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+                @guest
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('home') }}">Landing</a>
                 </li>
-                @if(auth::check())
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
-                </li>
-                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('projects') }}">Projects</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('contact') }}">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a style="border-style:solid;" class="nav-link pt-1 pb-1"  href="{{ route('login') }}">{{ __('Login') }}</a>
+                </li>
+                @else
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('dashboard')}}">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Landing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('projects') }}">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a style="border-style:solid;" class="nav-link pt-1 pb-1" href="{{ route('logout') }}"
+                                onclick="event.preventDefault();
+                                                document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </li>
+                @endguest
             </ul>
         </div>
     </div>

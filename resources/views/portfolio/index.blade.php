@@ -32,7 +32,7 @@
                     <td>{{ $d->updated_at->diffForHumans() }}</td>
                     <td>
                         <a class="btn btn-success mb-1" href="{{ $d->document_link }}">
-                            <i class="fa fa-link icon-large"></i>
+                            <i class="fa fa-download icon-large"></i>
                         </a>
                         <button href="#" data-toggle="modal" data-id="{{ $post->id }}"data-document="{{ $d->id }}" data-target="#editDocument" class="btn btn-primary mb-1"><i class="fa fa-wrench icon-large"></i></button>
                     </td>
@@ -46,6 +46,7 @@
         <div class="card-body">
             <a href="{{route('home')}}" class="btn btn-primary">Home</a>
             @if(Auth::check())
+            <a href="{{route('dashboard')}}" class="btn btn-primary">Dashboard</a>
             <button  data-toggle="modal" data-id="{{ $post->id }}" data-target="#createDocument" class="btn btn-primary">Attach a Document</button>
             @endif
         </div>
