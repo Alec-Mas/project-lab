@@ -115,7 +115,7 @@
                 modal.find('.modal-title').text('Edit ' + data['document_name'])
                 $('#edit-document-name').val(data['document_name']);
                 $('#edit-document-link').val(data['document_link']);
-                $('#document-edit-button').val(data['post_id']);
+                $('#document-edit-button').val(data['id']);
             },
             error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
                 console.log(JSON.stringify(jqXHR));
