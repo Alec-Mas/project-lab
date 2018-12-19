@@ -1,6 +1,6 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
@@ -21,6 +21,8 @@ html {
   -o-background-size: cover;
   background-size: cover;
   overflow-y: scroll;
+  font-family: "Telstra Akkurat" !important;
+  src: local("Telstra Akkurat");
 }
 
 body {

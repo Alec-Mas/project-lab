@@ -13,8 +13,9 @@
             <p class="card-text">{{ $post->post_content }}</p>
         </div>
     </div>
+    @if(Auth::check())
     <!-- Documentation -->
-    <div class="table table-responsive mt-4 mb-2">
+    <div class="table table-responsive mt-4">
         <table class="table">
             <thead>
                 <tr>
@@ -40,10 +41,13 @@
             @endforeach
         </table>
     </div>
-    <div class="card">
+    @endif
+    <div class="card mt-4">
         <div class="card-body">
             <a href="{{route('home')}}" class="btn btn-primary">Home</a>
+            @if(Auth::check())
             <button  data-toggle="modal" data-id="{{ $post->id }}" data-target="#createDocument" class="btn btn-primary">Attach a Document</button>
+            @endif
         </div>
     </div>
 </div>
