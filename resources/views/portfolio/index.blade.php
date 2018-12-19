@@ -33,7 +33,7 @@
                         <a class="btn btn-success mb-1" href="{{ $d->document_link }}">
                             <i class="fa fa-link icon-large"></i>
                         </a>
-                        <button href="#" data-toggle="modal" data-id="{{ $post->id }}" data-target="#editDocument" class="btn btn-primary mb-1"><i class="fa fa-wrench icon-large"></i></button>
+                        <button href="#" data-toggle="modal" data-id="{{ $post->id }}"data-document="{{ $d->id }}" data-target="#editDocument" class="btn btn-primary mb-1"><i class="fa fa-wrench icon-large"></i></button>
                     </td>
                 </tr>
             </tbody>

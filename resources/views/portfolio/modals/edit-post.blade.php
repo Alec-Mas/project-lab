@@ -99,14 +99,16 @@
     $('#editDocument').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var id = button.data('id') // Extract info from data-* attributes
+        var document_id = button.data('document') // Extract info from data-* attributes
+
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
-        modal.find('#post-id').attr("value", id);
+        modal.find('#post-id').attr("value", document_id);
         $.ajax({
             type : 'get',
             url : '{{ URL::to('/document/grab') }}',
-            data:{"_token": "{{ csrf_token() }}", 'id':id},
+            data:{"_token": "{{ csrf_token() }}", 'id':document_id},
             success:function(data){
                 // Populate the Modal with the correct post content
                 console.log(data);
