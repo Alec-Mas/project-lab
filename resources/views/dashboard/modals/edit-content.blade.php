@@ -138,7 +138,8 @@
                     </div>
                     <div class="form-group">
                         <label for="thumbnail" class="col-form-label">Thumbnail:</label>
-                        <input class="form-control" name="thumbnail" id="thumbnail" required>
+                        <input class="form-control" name="thumbnail" id="thumbnail" disabled required>
+                        <p style="color:red;">Thumbnail modification support coming soon!</p>
                     </div>
                     <div class="form-group">
                         <label for="call-to-action" class="col-form-label">Call to Action:</label>
