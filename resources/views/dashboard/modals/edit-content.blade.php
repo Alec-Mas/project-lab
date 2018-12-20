@@ -177,6 +177,29 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="deleteHero">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="delete-modal-title">Delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p id="delete-modal-body"></p>
+        </div>
+        <form id="create-hero-form" method="get" role="form">
+            <div class="modal-footer">
+                <input hidden type="text" class="form-control" id="post-id">
+                <button type="button" type="submit" id="delete-hero-button" class="btn btn-danger">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
 @section('footer_scripts')
 <script type="text/javascript">
 
@@ -398,6 +421,55 @@
 
         // Hide the Modal
         $('#deletePost').modal('toggle');
+    });
+
+    $('#deleteHero').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        
+        $.ajax({
+            type : 'get',
+            url : '{{ URL::to('/hero/retrieve') }}',
+            data:{"_token": "{{ csrf_token() }}", 'id':id},
+            success:function(data){
+                //$('tbody').html(data);
+                //console.log(data);
+                //$('#search-results').html(data);
+                // Populate the Modal with the correct post content
+                console.log(data);
+                modal.find('.modal-title').text('Woah! Be careful, {{ Auth::user()->name }}!');
+                modal.find('#delete-modal-body').text('Are you sure you want to delete the ' + data['hero_title'] + ' hero?');
+                $('#delete-hero-button').val(data['id']);
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        });
+    });
+
+    $('#delete-hero-button').click(function() {
+        var id = $(this).val();
+
+        // Save the post with AJAX
+        $.ajax({
+            type : 'get',
+            url : '{{ URL::to('/hero/delete/') }}',
+            data:{"_token": "{{ csrf_token() }}", 'id':id },
+            success:function(data){
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+                console.log(JSON.stringify(jqXHR));
+                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+            }
+        });
+
+        // Hide the Modal
+        $('#deleteHero').modal('toggle');
     });
 </script>
 @endsection

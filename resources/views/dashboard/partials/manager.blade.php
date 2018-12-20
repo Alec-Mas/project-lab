@@ -32,7 +32,6 @@
                         <button class="btn btn-danger mb-1" data-toggle="modal" data-target="#deletePost" data-id="{{ $p->id }}">
                             <i class="fa fa-trash icon-large"></i>
                         </button>
-
                     </td>
                 </tr>
             @endforeach

@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::post('/hero/create','HomeController@createHero');
     Route::get('/hero/retrieve','HomeController@retrieveHero');
     Route::get('/hero/update','HomeController@updateHero');
-    Route::post('/hero/delete/{id}','HomeController@deleteHero')->name('delete.hero');
+    Route::get('/hero/delete','HomeController@deleteHero');
 
     Route::post('/document/create','HomeController@createDocument');
     Route::get('/document/update','HomeController@updateDocument');
