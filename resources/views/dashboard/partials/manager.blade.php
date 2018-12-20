@@ -10,6 +10,7 @@
                 <th scope="col">Attached Documents</th>
                 <th scope="col">Date Created</th>
                 <th scope="col">Date Modified</th>
+                <th scope="col">Last Upload</th>
                 <th scope="col">Operations</th>
                 </tr>
             </thead>
@@ -22,6 +23,7 @@
                     <td>{{ count($p->documents) }}</td>
                     <td>{{ $p->created_at->diffForHumans() }}</td>
                     <td>{{ $p->updated_at->diffForHumans() }}</td>
+                    <td>{{ $p->last_update->diffForHumans() }}</i></p>
                     <td>
                         <a class="btn btn-success mb-1" href="{{ route('show.post', $p->id) }}">
                             <i class="fa fa-eye icon-large"></i>

@@ -43,7 +43,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="create-post-form" method="post" role="form">
+            <form id="create-post-form" action="{{ route('create.post') }}" method="POST" enctype="multipart/form-data">
+                 @csrf
                 <div class="modal-body">
                     <input hidden type="text" class="form-control" id="post-id">
                     <div class="form-group">
@@ -59,8 +60,7 @@
                         <textarea class="form-control" name="post-content" id="post-content" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="post-thumbnail" class="col-form-label">Thumbnail:</label>
-                        <input class="form-control" name="post-thumbnail" id="post-thumbnail" required>
+                        <input type="file" id="image" name="image" accept="image/png, image/jpeg">
                     </div>
                     <div class="form-group">
                         <label for="post-call-to-action" class="col-form-label">Call to Action:</label>
@@ -68,8 +68,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" type="submit" id="post-create-button" class="btn btn-primary">Create</button>
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="post-create-button" class="btn btn-primary">Create</button>
                 </div>
             </form>
         </div>
@@ -235,31 +235,31 @@
         $('#createHero').modal('toggle');
     });
 
-    $('#post-create-button').click(function() {
+    // $('#post-create-button').click(function() {
 
-        var title = $('#post-title').val();
-        var brief = $('#create-post-brief').val();
-        var content = $('#post-content').val();
-        var thumbnail = $('#post-thumbnail').val();
-        var call_to_action = $('#post-call-to-action').val();
+    //     var title = $('#post-title').val();
+    //     var brief = $('#create-post-brief').val();
+    //     var content = $('#post-content').val();
+    //     var thumbnail = $('#post-thumbnail').val();
+    //     var call_to_action = $('#post-call-to-action').val();
         
-        // Save the post with AJAX
-        $.ajax({
-            type : 'post',
-            url : '{{ URL::to('/post/create') }}',
-            data:{"_token": "{{ csrf_token() }}", 'post_title':title, 'post_brief':brief, 'post_content':content, 'post_thumbnail':thumbnail, 'post_call_to_action':call_to_action},
-            success:function(data){
-                location.reload();
-            },
-            error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
-                console.log(JSON.stringify(jqXHR));
-                console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
-            }
-        });
+    //     // Save the post with AJAX
+    //     $.ajax({
+    //         type : 'post',
+    //         url : '{{ URL::to('/post/create') }}',
+    //         data:{"_token": "{{ csrf_token() }}", 'post_title':title, 'post_brief':brief, 'post_content':content, 'post_thumbnail':thumbnail, 'post_call_to_action':call_to_action},
+    //         success:function(data){
+    //             location.reload();
+    //         },
+    //         error: function(jqXHR, textStatus, errorThrown) { // What to do if we fail
+    //             console.log(JSON.stringify(jqXHR));
+    //             console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+    //         }
+    //     });
 
         // Hide the Modal
-        $('#createPost').modal('toggle');
-    });
+    //    $('#createPost').modal('toggle');
+    //});
 
     $('#editPost').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal

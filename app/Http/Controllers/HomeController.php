@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Hero;
 use App\Models\Post;
@@ -32,6 +33,22 @@ class HomeController extends Controller
         $hero = Hero::paginate(5);
         // Retrieve the Latest Posts
         $posts = Post::paginate(20);
+
+        
+
+        foreach($posts as $p)
+        {
+            $benchmark = $p->updated_at;
+            foreach($p->documents as $d)
+            {
+                if($benchmark <= $d->updated_at)
+                {
+                    $benchmark = $d->updated_at;
+                }
+            }
+            $p['last_update'] = $benchmark;
+        }
+
         return view('dashboard.home', compact('hero', 'posts'));
     }
 
@@ -55,6 +72,9 @@ class HomeController extends Controller
         if($request->ajax())
         {
             $post = Post::findorFail($request->id);
+            // Delete all the attached documents first
+            $post->documents()->delete();
+            // Then delete the post
             $post->delete();
             return redirect('dashboard');
         }
@@ -66,30 +86,28 @@ class HomeController extends Controller
 
     public function createPost(Request $request)
     {
-        if($request->ajax())
-        {
-            $this->validate($request, [
-                'post_title'=>'required|max:50',
-                'post_brief' =>'required',
-                'post_content' =>'required',
-                'post_thumbnail' =>'required',
-                'post_call_to_action' =>'required',
-                ]);
+        request()->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-            Post::create([
-                'post_title' => request('post_title'),
-                'post_brief' => request('post_brief'),
-                'post_content' => request('post_content'),
-                'post_thumbnail' => request('post_thumbnail'),
-                'post_call_to_action' => request('post_call_to_action'),
-            ]);
+  
 
-            //return Response($request);
-        }
-        else
-        {
-            abort('404');
-        }
+        $email = \Auth::user()->email;
+        $path = $request->image->store($email);
+
+        $document_name = $path;
+        $user_id = \Auth::user()->id;
+
+        Post::create([
+            'post_title' => request('post-title'),
+            'post_brief' => request('create-post-brief'),
+            'post_content' => request('post-content'),
+            'post_thumbnail' => $document_name,
+            'post_call_to_action' => request('post-call-to-action'),
+        ]);
+        
+        echo $path;
+        echo $document_name;
     }
 
     public function updatePost(Request $request)
