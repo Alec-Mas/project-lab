@@ -28,7 +28,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/grab','HomeController@retrievePost');
     Route::get('/post/update','HomeController@updatePost');
     Route::post('/post/create','HomeController@createPost');
-    Route::post('/post/delete/{id}','HomeController@deletePost')->name('delete.post');
+    Route::get('/post/delete','HomeController@deletePost');
 
     Route::post('/hero/create','HomeController@createHero');
     Route::get('/hero/retrieve','HomeController@retrieveHero');

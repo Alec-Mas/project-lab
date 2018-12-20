@@ -29,13 +29,10 @@
                         <button class="btn btn-primary mb-1" data-toggle="modal" data-target="#editPost" data-id="{{ $p->id }}" data-whatever="{{ $p->id }}">
                             <i class="fa fa-wrench icon-large"></i>
                         </button>
-                        <form action="{{ route('delete.post', $p->id) }}" method="POST">
-                            <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}" />
-                            <input hidden type="text" class="form-control" id="id" value="{{ $p->id }}">
-                            <button type="submit" class="btn btn-danger mb-1" data-id="{{ $p->id }}">
-                                <i class="fa fa-trash icon-large"></i>
-                            </button>
-                        </form>
+                        <button class="btn btn-danger mb-1" data-toggle="modal" data-target="#deletePost" data-id="{{ $p->id }}">
+                            <i class="fa fa-trash icon-large"></i>
+                        </button>
+
                     </td>
                 </tr>
             @endforeach

@@ -44,14 +44,24 @@ class HomeController extends Controller
 
             return Response($posts);
         }
+        else
+        {
+            abort('404');
+        }
     }
 
     public function deletePost(Request $request)
     {
-        $post = Post::findorFail($request->id);
-        $post->delete();
-        return redirect('dashboard');
-
+        if($request->ajax())
+        {
+            $post = Post::findorFail($request->id);
+            $post->delete();
+            return redirect('dashboard');
+        }
+        else
+        {
+            abort('404');
+        }
     }
 
     public function createPost(Request $request)
@@ -75,6 +85,10 @@ class HomeController extends Controller
             ]);
 
             //return Response($request);
+        }
+        else
+        {
+            abort('404');
         }
     }
 
@@ -102,6 +116,10 @@ class HomeController extends Controller
             return Response($request);
             //echo $request;
         }
+        else
+        {
+            abort('404');
+        }
     }
 
 
@@ -112,6 +130,10 @@ class HomeController extends Controller
             $hero = Hero::findorFail($request->id);
 
             return Response($hero);
+        }
+        else
+        {
+            abort('404');
         }
     }
 
