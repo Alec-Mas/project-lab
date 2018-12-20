@@ -106,8 +106,8 @@ class HomeController extends Controller
             'post_call_to_action' => request('post-call-to-action'),
         ]);
         
-        echo $path;
-        echo $document_name;
+        return redirect('dashboard');
+
     }
 
     public function updatePost(Request $request)
