@@ -18,7 +18,7 @@ class LandingController extends Controller
         $hero = Hero::all();
 
         // Retrieve the Latest Posts
-        $posts = Post::orderBy('updated_at', 'desc')->take(4)->get();
+        $posts = Post::orderBy('updated_at', 'desc')->take(8)->get();
 
         return view('landing.welcome', compact('hero', 'posts'));
     }
