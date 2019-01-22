@@ -5,12 +5,12 @@
     <!-- Jumbotron Header -->
     <header class="jumbotron my-4">
         <h1 class="display-3">{{ $post->post_title }}</h1>
+        <p class="card-text">{{ $post->post_brief }}</p>
     </header>
     <!-- Post Content -->
     <div class="card">
         <div class="card-body">
-            <p class="card-text">{{ $post->post_brief }}</p>
-            <p class="card-text">{{ $post->post_content }}</p>
+            <?php echo $post->post_content ?>
         </div>
     </div>
     @if(Auth::check())

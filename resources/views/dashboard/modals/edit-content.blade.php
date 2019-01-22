@@ -130,11 +130,13 @@
                     </div>
                     <div class="form-group">
                         <label for="edit-post-brief" class="col-form-label">Brief:</label>
-                        <textarea class="form-control" name="edit-post-brief" id="edit-post-brief" required></textarea>
+                        <input type="text" class="form-control" name="edit-post-brief" id="edit-post-brief" required>
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Content:</label>
-                        <textarea class="form-control" name="message-text" id="message-text" required></textarea>
+                        <div id="editor">
+                            <input name="message-text" id="message-text" hidden>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="thumbnail" class="col-form-label">Thumbnail:</label>
@@ -203,6 +205,14 @@
 
 @section('footer_scripts')
 <script type="text/javascript">
+    var options = {
+        placeholder: 'Compose an epic...',
+        readOnly: false,
+        theme: 'snow'
+    };
+
+    var editor = new Quill('#editor', options);
+
 
     $('#createPost').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
@@ -283,7 +293,7 @@
                 $('#save-button').val(data['id']);
                 $('#recipient-name').val(data['post_title']);
                 $('#edit-post-brief').val(data['post_brief']);
-                $('#message-text').val(data['post_content']);
+                editor.root.innerHTML = data['post_content'];
                 $('#thumbnail').val(data['post_thumbnail']);
                 $('#call-to-action').val(data['post_call_to_action']);
             },
@@ -302,12 +312,15 @@
         var thumbnail = $('#thumbnail').val();
         var call_to_action = $('#call-to-action').val();
 
+        // Populate hidden form on submit
+        var editor_content = editor.root.innerHTML;
+
         console.log(content);
         // Save the post with AJAX
         $.ajax({
             type : 'get',
             url : '{{ URL::to('/post/update') }}',
-            data:{"_token": "{{ csrf_token() }}", 'id':id, 'post_title':title, 'post_brief':brief, 'post_content':content, 'post_thumbnail':thumbnail, 'post_call_to_action':call_to_action},
+            data:{"_token": "{{ csrf_token() }}", 'id':id, 'post_title':title, 'post_brief':brief, 'post_content':editor_content, 'post_thumbnail':thumbnail, 'post_call_to_action':call_to_action},
             success:function(data){
                 location.reload();
             },
