@@ -16,6 +16,7 @@
     @if(Auth::check())
     <!-- Documentation -->
     <div class="table table-responsive mt-4">
+        @if(count($post->documents) > 0)
         <table class="table">
             <thead>
                 <tr>
@@ -40,12 +41,13 @@
             </tbody>
             @endforeach
         </table>
+        @endif
     </div>
     @endif
     @if(Auth::check())
     <div class="card mt-4">
         <div class="card-body">
-            <button  data-toggle="modal" data-id="{{ $post->id }}" data-target="#createDocument" class="btn btn-primary">Attach a Document</button>
+            <button  data-toggle="modal" data-id="{{ $post->id }}" data-target="#createDocument" class="btn btn-primary">Link a Document</button>
         </div>
     </div>
     @endif
