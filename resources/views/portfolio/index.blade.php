@@ -42,15 +42,13 @@
         </table>
     </div>
     @endif
+    @if(Auth::check())
     <div class="card mt-4">
         <div class="card-body">
-            <a href="{{route('home')}}" class="btn btn-primary">Home</a>
-            @if(Auth::check())
-            <a href="{{route('dashboard')}}" class="btn btn-primary">Dashboard</a>
             <button  data-toggle="modal" data-id="{{ $post->id }}" data-target="#createDocument" class="btn btn-primary">Attach a Document</button>
-            @endif
         </div>
     </div>
+    @endif
 </div>
 
 @include('portfolio.modals.edit-post')
